@@ -1,0 +1,929 @@
+/*
+	Authors:
+	- K5 Student: Nguyen Ta Minh Triet <104993913@student.swin.edu.au>
+	- K5 Student: Nguyen Quoc Bao <104993175@student.swin.edu.au>
+	Purpose: Stylesheet for Assignment 2 Website "AvtoZeichen"
+	Unit: Computing Technology Inquiry Project <COS10026>
+*/
+
+:root {
+	/* Use Catppuccin Macchiato color palette */
+	--rosewater: #f4dbd6;
+	--flamingo: #f0c6c6;
+	--pink: #f5bde6;
+	--mauve: #c6a0f6;
+	--red: #ed8796;
+	--maroon: #ee99a0;
+	--peach: #f5a97f;
+	--yellow: #eed49f;
+	--green: #a6da95;
+	--teal: #8bd5ca;
+	--sky: #91d7e3;
+	--sapphire: #7dc4e4;
+	--blue: #8aadf4;
+	--lavender: #b7bdf8;
+	--text: #cad3f5;
+	--subtext1: #b8c0e0;
+	--subtext0: #a5adcb;
+	--overlay2: #939ab7;
+	--overlay1: #8087a2;
+	--overlay0: #6e738d;
+	--surface2: #5b6078;
+	--surface1: #494d64;
+	--surface0: #363a4f;
+	--base: #24273a;
+	--mantle: #1e2030;
+	--crust: #181926;
+
+	/* Define transition style to use across the website */
+	--default-transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+	/* Hamburger menu width */
+	--burger-width: 80vw;
+
+	/* Default text color and font */
+	color: var(--text);
+	font-size: 16px;
+	font-family: Lexend, sans-serif;
+	scroll-behavior: smooth;
+}
+
+/*
+	<< GENERAL ELEMENTS >>
+*/
+
+/* Include padding and border in every HTML element's width and height */
+* {
+	box-sizing: border-box;
+}
+
+/* Website body - remove browser default margin and set background color */
+body {
+	margin: 0;
+	background-color: var(--base);
+}
+
+/* Webpage headers */
+header {
+	padding: 1rem;
+}
+
+/* Webpage title */
+header h1 {
+	text-align: center;
+}
+
+/* Website main part */
+main, form, article {
+	max-width: 80ch;
+	margin: auto;
+}
+
+/* Pad certain elements - For better text/graphic display */
+:is(main, form, article, nav, footer, fieldset) {
+	padding: 1rem;
+}
+
+/* Round certain elements */
+:is(blockquote, fieldset, legend, details) {
+	border-radius: 1rem;
+}
+
+/* Headings */
+:is(h1, h2, h3, h4, h5, h6) {
+	margin-block: 0.5rem;
+}
+
+/* Use Ubuntu font for first three levels of heading */
+:is(h1, h2, h3) {
+	font-family: Ubuntu, sans-serif;
+}
+
+/* this css rule is required by the instruction */
+h1 {
+	font: bold 2em Ubuntu, sans-serif;
+}
+
+/* Generic links */
+a {
+	color: inherit;
+	text-decoration: none;
+	transition: 1s var(--default-transition);
+}
+
+/* Expand (if block) or underline (if inline) links when hovered */
+a:hover {
+	transform: scale(1.1); /* scale: 1.1; is newer, but too new for validator to know */
+	text-decoration: underline;
+}
+
+/* Call-To-Action buttons */
+a.cta {
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	width: fit-content;
+	display: block;
+	color: var(--base);
+	font-weight: bold;
+	text-decoration: none;
+}
+
+/* GoTo links */
+a.goto {
+	font-weight: bold;
+}
+
+/* Add a little arrow in GoTo links */
+a.goto::after {
+	content: " >";
+}
+
+/* Hidden elements */
+.hidden {
+	visibility: hidden;
+}
+
+/* Two-column layout */
+.dual {
+	display: grid;
+	grid-template-columns: auto auto;
+	gap: 1rem;
+}
+
+/* Keep aspect ratio of images */
+.responsive-image {
+	width: 100%;
+	height: auto;
+}
+
+/* Red Text Highlight */
+.text-red {
+	color: var(--red);
+}
+
+/* Yellow Text Highlight */
+.text-yellow {
+	color: var(--yellow);
+}
+
+/* Green Text Highlight */
+.text-green {
+	color: var(--green);
+}
+
+/* Align text to the center */
+.text-center {
+	text-align: center;
+}
+
+/* Align text to the right */
+.text-right {
+	text-align: right;
+}
+
+/* Highlight selected text in yellow */
+::selection {
+	color: var(--base);
+	background-color: var(--yellow);
+}
+
+/* Navigation bar */
+nav {
+	background-color: var(--crust);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: sticky;
+	top: 0;
+}
+
+/* Navigation bar menu */
+nav ul {
+	padding: 0;
+	gap: 1rem;
+	display: none;
+	list-style-type: none;
+}
+
+/* Navigation bar menu item */
+nav ul li {
+	transition: 1s var(--default-transition);
+}
+
+nav ul li:hover {
+	text-decoration: underline;
+	text-decoration-thickness: 3px;
+	transform: scale(1.1); /* scale: 1.1; is newer, but too new for validator to know */
+}
+
+/* Hamburger menu */
+/* The menu functions without JavaScript, thanks to a checkbox trick:
+- Have a hidden checkbox and a label pointing to it. We use this checkbox as a "switch"
+- Place the label elsewhere, e.g on the navbar. We use the label to activate our switch
+- Move the menu out of viewport by default, then move it back when the checkbox is ticked (switch is on)
+=> This works because you can tick a checkbox by clicking on its label */
+aside.burger-menu {
+	width: var(--burger-width);
+	height: 90vh;
+	padding: 1rem;
+	position: fixed;
+
+	/* Styling */
+	background: var(--crust);
+	transition: 0.5s var(--default-transition);
+
+	/* Moved out of viewport and above other elements */
+	left: calc(-10em - var(--burger-width));
+	z-index: 69;
+
+	/* Flex layout */
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+/* Hamburger menu item groups */
+aside.burger-menu ul {
+	padding-left: 1rem;
+}
+
+/* Hamburger menu items */
+aside.burger-menu ul li {
+	padding-block: 1rem;
+	font-size: 1.5em;
+	list-style: none;
+}
+
+/* Hide the checkbox */
+#toggler {
+	display: none;
+}
+
+/* Show the sidebar when the checkbox is ticked */
+#toggler:checked ~ aside.burger-menu {
+	left: 0;
+}
+
+/* Footer */
+footer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-around;
+	column-gap: 1rem;
+
+	background-color: var(--crust);
+	font-size: small;
+	text-align: center;
+	clear: both;
+}
+
+/* Footer navigation */
+footer ul {
+	padding: 0;
+	gap: 1rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	list-style-type: none;
+}
+
+/* Footer logo */
+footer img {
+	width: auto;
+	height: 2.5em;
+}
+
+/*
+	<< HOME PAGE >>
+*/
+
+/* What people says about us */
+blockquote {
+	margin-inline: auto;
+	padding: 0.5rem 2rem;
+	background-color: var(--surface0);
+}
+
+/* Add a big quotation mark before the quote */
+blockquote p:first-of-type::before {
+	content: "\"";
+	font-size: 3em;
+}
+
+/* Hero section */
+#hero {
+	padding: 3rem 1rem;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+
+	background-image: linear-gradient(#18192670, #18192670), url(https://upload.wikimedia.org/wikipedia/commons/7/73/Nov%C3%A1_Povltavsk%C3%A1%2C_Ho%C5%99%C3%AD_v_tunelu_%2801%29.jpg);
+	background-position: center;
+	background-size: cover;
+}
+
+/* Big text in Hero section */
+#hero h1 {
+	margin: 0;
+}
+
+/* CTA button in Hero section */
+#hero a.cta {
+	background-color: var(--yellow);
+}
+
+/* Add extra paddings for home page contents */
+#homepage {
+	padding-inline: 2rem;
+}
+
+/* Space the homepage graphic from other elements */
+#graphic {
+	padding-block: 2rem 1rem;
+}
+
+/*
+	<< ABOUT US PAGE >>
+*/
+
+/* Team image */
+figure img {
+	border: 6px solid var(--peach);
+	border-radius: 1rem;
+}
+
+/* Team image figure */
+figure {
+	margin: 0;
+}
+
+/* Team image caption */
+figcaption {
+	text-align: center;
+}
+
+/* Definition descriptions aligned to the right */
+dd {
+	text-align: right;
+}
+
+/* Timetable */
+table {
+	margin-block: 1rem;
+	text-align: center;
+	border: 6px solid var(--text);
+	border-collapse: collapse;
+}
+
+/* Timetable cell */
+th, td {
+	padding: 0.5rem;
+}
+
+/* Timetable odd cells */
+:is(th, td):nth-of-type(odd) {
+	color: var(--base);
+	background-color: var(--text);
+}
+
+/* Timetable even cells */
+:is(th, td):nth-of-type(even) {
+	color: var(--text);
+	border-block: 2px solid var(--text);
+}
+
+/* Hide long format date row on mobile */
+tr.long-format {
+	display: none;
+}
+
+/* Timetable container */
+#timetable {
+	overflow-x: auto;
+}
+
+:is(#aboutpage h2, #team-members) {
+	clear: both;
+}
+
+/* Member entries - stylised to resemble the company's logo */
+#team-members {
+	margin: auto;
+	color: var(--base);
+}
+
+/* Member profile */
+#team-members article {
+	margin-bottom: 1rem;
+	padding: 0.5rem 2rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* Member profile / Text */
+#team-members hgroup * {
+	margin-block: 0.5rem;
+}
+
+/* Member profile / Image */
+#team-members img {
+	background-color: var(--base);
+	border-radius: 50%;
+}
+
+/* Top member profile */
+#team-members #top {
+	background-color: var(--red);
+	border-radius: 4rem 4rem 0 0;
+}
+
+/* Middle member profile */
+#team-members #mid {
+	background-color: var(--yellow);
+	border-radius: 4rem 0 4rem 0;
+}
+
+/* Bottom member profile */
+#team-members #btm {
+	background-color: var(--green);
+	border-radius: 0 0 4rem 0;
+}
+
+/*
+	<< JOB DESCRIPTIONS PAGE >>
+*/
+
+/* Extra Info box */
+aside.infobox {
+	margin: 0 auto 2rem;
+	padding: 1rem;
+	color: var(--yellow);
+	border: 6px solid var(--yellow);
+	border-radius: 1rem;
+}
+
+/* Extra Info box heading */
+aside.infobox h2 {
+	margin-top: 0;
+}
+
+/* Extra Info box list */
+aside.infobox ol {
+	width: fit-content;
+	margin: auto;
+}
+
+/* Scroll-To-Top button container */
+aside#go-up {
+	width: 25%;
+	margin-bottom: 1rem;
+	float: right;
+	border: 0.25em solid var(--flamingo);
+	border-radius: 1rem;
+	text-align: center;
+	color: var(--flamingo);
+	background-color: var(--base);
+}
+
+/* Scroll-To-Top button container changes color when hovered */
+aside#go-up:hover {
+	color: var(--base);
+	background-color: var(--flamingo);
+}
+
+/* Scroll-To-Top button */
+aside#go-up a {
+	padding: 0.5rem 1rem;
+	display: inline-block;
+}
+
+/* Hide STT button text on mobile */
+aside#go-up strong {
+	display: none;
+}
+
+/* Show STT button icon on mobile */
+aside#go-up svg {
+	display: inline-block;
+}
+
+/* Job Description accordion-style containers */
+details {
+	margin-bottom: 1rem;
+	clear: both;
+
+	--accent: var(--flamingo);
+	color: var(--base);
+	background-color: var(--accent);
+}
+
+/* Job Description containers change color zebra-style */
+details:nth-child(even) {
+	--accent: var(--rosewater);
+}
+
+/* "Apply now" CTA buttons */
+details a.cta {
+	margin-left: auto;
+	color: var(--accent);
+	background-color: var(--base);
+}
+
+/* Job descriptions */
+details section {
+	padding-inline: 1rem;
+	padding-bottom: 1rem;
+}
+
+/* Job title container */
+summary {
+	padding: 1rem;
+	cursor: pointer;
+}
+
+/* Job title */
+summary h3 {
+	display: inline;
+	margin: 0;
+}
+
+/* Lists in Extra Info box and Job descriptions */
+:is(details, aside.infobox) :where(ul, ol) {
+	padding-left: 1rem;
+}
+
+/*
+	<< APPLICATION FORM PAGE >>
+*/
+
+/* Container for each field */
+form p {
+	margin-block: 0.5rem;
+}
+
+/* Spacing between labels and fields */
+form br {
+	margin-bottom: 0.5rem;
+}
+
+/* Related form infos */
+fieldset {
+	margin: 0 0 1rem;
+	color: var(--base);
+	background-color: var(--red);
+	border: none;
+}
+
+/* Rainbow Application Form! */
+fieldset:nth-of-type(2n) {
+	background-color: var(--peach);
+}
+
+fieldset:nth-of-type(3n) {
+	background-color: var(--yellow);
+}
+
+fieldset:nth-of-type(4n) {
+	background-color: var(--green);
+}
+
+fieldset:nth-of-type(5n) {
+	background-color: var(--blue);
+}
+
+fieldset:nth-of-type(6n) {
+	background-color: var(--mauve);
+}
+
+/* Related form infos title */
+legend {
+	padding: 0.5rem 1rem;
+	background-color: inherit;
+	font-weight: bold;
+}
+
+/* General form inputs */
+input {
+	accent-color: var(--base);
+	transition: 1s var(--default-transition);
+}
+
+/* Text form inputs */
+input[type=text], input[type=email], input[type=tel], select, textarea {
+	width: 100%;
+	padding: 0.5rem;
+	color: var(--text);
+	background-color: var(--base);
+	font: inherit;
+	border: none;
+	border-radius: 0.5rem;
+}
+
+/* Form buttons */
+input[type=submit], input[type=reset] {
+	margin-left: 0.5rem;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+
+	color: var(--base);
+	background-color: var(--text);
+
+	font: inherit;
+	font-weight: bold;
+
+	border: none;
+	border-radius: 0.5rem;
+}
+
+/* Expand form buttons when hovered */
+input[type=submit]:hover, input[type=reset]:hover {
+	transform: scale(1.1); /* scale: 1.1; is newer, but too new for validator to know */
+}
+
+/*
+	<< NOTES ON ENHANCEMENTS PAGE >>
+*/
+
+/* Opposite mode box */
+div#mode-demonstration * {
+	text-align: center;
+}
+
+/* Opposite mode icon */
+div#mode-demonstration img {
+	width: 25%;
+	height: auto;
+}
+
+#opposite-mode {
+	margin: 0 auto 3rem;
+	padding: 1em;
+	border-radius: 1em;
+	border: 0.5em solid #4c4f69;
+	background-color: #eff1f5;
+	color: #4c4f69;
+}
+
+/* Dynamic light/dark mode switching demonstration in Enhancement page */
+
+.theme-light {
+	display: none;
+}
+
+.theme-dark {
+	display: inline;
+}
+
+/*
+	<< EOI PROCESS PAGE >>
+*/
+
+/* Message after EOI is processed */
+#process-page header {
+	min-height: 80vh;
+	padding: 3rem;
+	display: grid;
+	place-items: center;
+}
+
+/* List of error messages */
+#process-message ul {
+	max-width: 75ch;
+	width: fit-content;
+	margin-inline: auto;
+	gap: 3rem;
+}
+
+/*
+	<< EOI MANAGE PAGE >>
+*/
+
+/* Reusable grid class for organising UI */
+.grid {
+	gap: 0.5rem;
+	display: grid;
+	align-items: center;
+}
+
+/* Clear button margin from Assignment 1 */
+.grid input[type=submit] {
+	margin-left: 0;
+}
+
+/* Take advantage of rainbow fieldsets in Assignment 1 */
+#manage-toolbars {
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+/* Clear default margins */
+#eoi-list :where(p, ul) {
+	margin: 0;
+}
+
+/* Form container for the Mark buttons */
+#eoi-list form {
+	width: fit-content;
+	margin-inline: auto 0;
+	padding-top: 0;
+}
+
+/* The Mark buttons */
+#eoi-list input[type=submit] {
+	margin-left: 0.5rem;
+	background-color: var(--base);
+	color: var(--accent);
+}
+
+/* Container for EOI tags */
+#eoi-tags {
+	padding-inline: 1rem;
+	gap: 0.5rem;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+/* EOI tags */
+#eoi-tags span {
+	padding: 0.5rem 1rem;
+	border-radius: 1rem;
+	color: var(--accent);
+	background-color: var(--base);
+}
+
+/*
+	<< PASSIVE LIGHT/DARK MODE >>
+	Will change mode accordingly to browser theme
+*/
+
+@media (prefers-color-scheme: light) {
+	/* Latte color palette */
+	:root {
+		--rosewater: #dc8a78;
+		--flamingo: #dd7878;
+		--pink: #ea76cb;
+		--mauve: #8839ef;
+		--red: #d20f39;
+		--maroon: #e64553;
+		--peach: #fe640b;
+		--yellow: #df8e1d;
+		--green: #40a02b;
+		--teal: #179299;
+		--sky: #04a5e5;
+		--sapphire: #209fb5;
+		--blue: #1e66f5;
+		--lavender: #7287fd;
+		--text: #4c4f69;
+		--subtext1: #5c5f77;
+		--subtext0: #6c6f85;
+		--overlay2: #7c7f93;
+		--overlay1: #8c8fa1;
+		--overlay0: #9ca0b0;
+		--surface2: #acb0be;
+		--surface1: #bcc0cc;
+		--surface0: #ccd0da;
+		--base: #eff1f5;
+		--mantle: #e6e9ef;
+		--crust: #dce0e8;
+	}
+
+	#hero h1 {
+		color: var(--crust);
+	}
+
+	aside.infobox {
+		color: var(--text);
+		border-color: var(--text);
+	}
+
+	aside#go-up {
+		color: var(--text);
+		border-color: var(--text);
+		background-color: var(--base);
+	}
+
+	aside#go-up:hover {
+		color: var(--base);
+		background-color: var(--text);
+	}
+
+	details {
+		--accent: var(--green);
+		color: var(--text);
+		border: 6px solid var(--text);
+		background-color: unset;
+	}
+
+	details:nth-child(even) {
+		--accent: var(--flamingo);
+	}
+
+	details a.cta {
+		color: var(--base);
+ 		background-color: var(--accent);
+	}
+
+	.theme-light {
+		display: inline;
+	}
+
+	.theme-dark {
+		display: none;
+	}
+
+	#opposite-mode {
+		border-color: #cad3f5;
+		background-color: #24273a;
+		color: #cad3f5;
+	}
+}
+
+/*
+	<< TABLET/DESKTOP LAYOUT >>
+*/
+
+@media (width > 600px) and (height > 600px) {
+	:root {
+		font-size: 20px;
+	}
+
+	nav {
+		justify-content: space-around;
+	}
+
+	nav ul {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	footer {
+		flex-direction: row;
+	}
+
+	#hero {
+		min-height: 50vh;
+	}
+
+	#hero h1 {
+		max-width: 35ch;
+		font-size: 3em;
+	}
+
+	aside.burger-menu, label[for=toggler], img[src="./images/icon-menu.svg"] {
+		display: none;
+	}
+
+	#aboutpage :where(figure, dl) {
+		width: 48%;
+		margin-block: 0 1rem;
+	}
+
+	#aboutpage figure {
+		float: right;
+	}
+
+	#aboutpage dl {
+		float: left;
+	}
+
+	/* Show button text on desktop */
+	aside#go-up strong {
+		display: inline-block;
+	}
+
+	/* Hide button icon on desktop */
+	aside#go-up svg {
+		display: none;
+	}
+
+	/* Show long format date row */
+	tr.long-format {
+		display: table-row;
+	}
+
+	/* Hide short format date row */
+	tr.short-format {
+		display: none;
+	}
+
+	/* Two-column text layout */
+	#process-message ul {
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	}
+
+	/* Two-column grid layout */
+	.double {
+		grid-template-columns: 2fr 1fr;
+	}
+
+	/* Three-column grid layout */
+	.triple {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+}
