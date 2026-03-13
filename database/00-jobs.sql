@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS job_descriptions (
+CREATE TABLE IF NOT EXISTS jobs (
 	`ref_number` CHAR(5) NOT NULL,
 	`title` VARCHAR(30) NOT NULL,
 	`description` TEXT NOT NULL,
@@ -8,10 +8,10 @@ CREATE TABLE IF NOT EXISTS job_descriptions (
 	`responsibilities` TEXT NOT NULL,
 	`requirements_essentials` TEXT NOT NULL,
 	`requirements_preferable` TEXT NULL,
-	PRIMARY KEY (`ref_number`, `title`)
+	PRIMARY KEY (`ref_number`)
 );
 
-INSERT INTO `job_descriptions`(
+INSERT INTO `jobs`(
 	`ref_number`,
 	`title`,
 	`description`,
